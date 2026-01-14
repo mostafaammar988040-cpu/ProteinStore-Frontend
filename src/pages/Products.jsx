@@ -16,38 +16,29 @@ export default function Products() {
 
   const selectedCategory = searchParams.get("category");
   const selectedSub = searchParams.get("sub");
-useEffect(() => {
-  api.get("/products").then((res) => {
-    if (Array.isArray(res.data)) {
-      setProducts(res.data);
-    } else if (Array.isArray(res.data.products)) {
-      setProducts(res.data.products);
-    } else {
-      console.error("Unexpected products response:", res.data);
-      setProducts([]);
-    }
-  });
-}, []);
+
+  useEffect(() => {
+    api.get("/products").then((res) => {
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else {
+        setProducts([]);
+      }
+    });
+  }, []);
 
   const filteredProducts = useMemo(() => {
     let result = products.filter((p) => {
-      const matchSearch = p.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-
-      const matchPrice = p.price <= maxPrice;
-
-      const matchCategory =
-        !selectedCategory ||
-        selectedCategory === "all" ||
-        p.category === selectedCategory;
-
-      const matchSub =
-        !selectedSub ||
-        selectedSub === "all" ||
-        p.subCategory === selectedSub;
-
-      return matchSearch && matchPrice && matchCategory && matchSub;
+      return (
+        p.name.toLowerCase().includes(search.toLowerCase()) &&
+        p.price <= maxPrice &&
+        (!selectedCategory ||
+          selectedCategory === "all" ||
+          p.category === selectedCategory) &&
+        (!selectedSub ||
+          selectedSub === "all" ||
+          p.subCategory === selectedSub)
+      );
     });
 
     switch (sortBy) {
@@ -68,8 +59,10 @@ useEffect(() => {
     <>
       {/* HERO */}
       <section className="hero">
-        <h1>All Products</h1>
-        <p>Everything you need in one place</p>
+        <div>
+          <h1>All Products</h1>
+          <p>Everything you need in one place</p>
+        </div>
       </section>
 
       {/* TOOLBAR */}
@@ -101,12 +94,7 @@ useEffect(() => {
             <div key={p.id} className="card">
               <div className="image-box">
                 <img src={p.imageUrl} alt={p.name} />
-
-                {/* HOVER OVERLAY */}
-                <div
-                  className="overlay"
-                  onClick={() => setSelectedProduct(p)}
-                >
+                <div className="overlay" onClick={() => setSelectedProduct(p)}>
                   <span>Details</span>
                 </div>
               </div>
@@ -127,9 +115,7 @@ useEffect(() => {
                   >
                     −
                   </button>
-
                   <span>{qty[p.id] || 1}</span>
-
                   <button
                     onClick={() =>
                       setQty((q) => ({
@@ -158,25 +144,14 @@ useEffect(() => {
       {selectedProduct && (
         <div className="modal-bg" onClick={() => setSelectedProduct(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="close"
-              onClick={() => setSelectedProduct(null)}
-            >
+            <button className="close" onClick={() => setSelectedProduct(null)}>
               ✕
             </button>
-
-            <img
-              src={selectedProduct.imageUrl}
-              alt={selectedProduct.name}
-            />
-
+            <img src={selectedProduct.imageUrl} alt={selectedProduct.name} />
             <h2>{selectedProduct.name}</h2>
             <p className="modal-weight">{selectedProduct.weight}</p>
             <div className="modal-price">${selectedProduct.price}</div>
-
-            <p className="description">
-              {selectedProduct.description}
-            </p>
+            <p className="description">{selectedProduct.description}</p>
           </div>
         </div>
       )}
@@ -193,28 +168,11 @@ useEffect(() => {
   text-align: center;
   color: white;
 }
-  @media (max-width: 700px) {
+
+@media (max-width: 700px) {
   .hero {
     padding: 80px 20px;
-    min-height: 100svh; /* better than vh on mobile */
-  }
-
-  .hero h1 {
-    font-size: 34px;
-    line-height: 1.2;
-  }
-
-  .hero p {
-    font-size: 16px;
-    margin-top: 12px;
-  }
-}
-  @media (max-width: 700px) {
-  .hero button,
-  .hero .btn {
-    margin-top: 24px;
-    padding: 14px 26px;
-    font-size: 16px;
+    min-height: 100svh;
   }
 }
 
@@ -225,12 +183,6 @@ useEffect(() => {
   margin: 60px 0;
 }
 
-.search, .sort {
-  padding: 14px 18px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-}
-
 .products {
   background: #f8fafc;
   padding: 60px 80px;
@@ -238,21 +190,19 @@ useEffect(() => {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* laptop */
+  grid-template-columns: repeat(4, 1fr);
   gap: 36px;
 }
 
-/* Tablets */
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Phones */
 @media (max-width: 700px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr); /* SAME STYLE, just 2 columns */
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 }
@@ -263,23 +213,10 @@ useEffect(() => {
   padding: 26px;
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,.12);
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 700px) {
-  .card {
-    padding: 18px;
-    border-radius: 20px;
-  }
-
-  .price {
-    font-size: 20px;
-  }
-}
-  @media (max-width: 700px) {
-  .image-box {
-    height: 130px;
-  }
-}
 .image-box {
   position: relative;
   height: 160px;
@@ -293,9 +230,15 @@ useEffect(() => {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+  aspect-ratio: 1 / 1;
 }
 
-/* HOVER */
+@media (max-width: 700px) {
+  .image-box {
+    height: 130px;
+  }
+}
+
 .overlay {
   position: absolute;
   inset: 0;
@@ -304,17 +247,13 @@ useEffect(() => {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  cursor: pointer;
   transition: .3s;
   border-radius: 16px;
+  cursor: pointer;
 }
+
 .image-box:hover .overlay {
   opacity: 1;
-}
-.overlay span {
-  color: white;
-  font-weight: 900;
-  font-size: 18px;
 }
 
 .price {
@@ -326,6 +265,14 @@ useEffect(() => {
 .actions {
   display: flex;
   gap: 12px;
+  margin-top: auto;
+}
+
+@media (max-width: 700px) {
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .qty {
@@ -335,6 +282,7 @@ useEffect(() => {
   padding: 8px 16px;
   display: flex;
   gap: 12px;
+  justify-content: center;
 }
 
 .add {
@@ -344,9 +292,9 @@ useEffect(() => {
   color: white;
   border: none;
   font-weight: 800;
+  padding: 12px;
 }
 
-/* MODAL */
 .modal-bg {
   position: fixed;
   inset: 0;
@@ -362,25 +310,7 @@ useEffect(() => {
   width: 420px;
   padding: 30px;
   border-radius: 30px;
-  position: relative;
   text-align: center;
-}
-
-.modal img {
-  max-width: 200px;
-  margin-bottom: 16px;
-}
-
-.modal-price {
-  font-size: 28px;
-  font-weight: 900;
-  color: #2563eb;
-}
-
-.description {
-  margin-top: 16px;
-  color: #334155;
-  line-height: 1.6;
 }
 
 .close {
@@ -390,7 +320,6 @@ useEffect(() => {
   border: none;
   background: none;
   font-size: 22px;
-  cursor: pointer;
 }
       `}</style>
     </>
