@@ -210,8 +210,23 @@ useEffect(() => {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* laptop */
   gap: 36px;
+}
+
+/* Tablets */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Phones */
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* SAME STYLE, just 2 columns */
+    gap: 20px;
+  }
 }
 
 .card {
@@ -222,6 +237,21 @@ useEffect(() => {
   box-shadow: 0 30px 60px rgba(0,0,0,.12);
 }
 
+@media (max-width: 700px) {
+  .card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+}
+  @media (max-width: 700px) {
+  .image-box {
+    height: 130px;
+  }
+}
 .image-box {
   position: relative;
   height: 160px;
