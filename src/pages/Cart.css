@@ -122,3 +122,55 @@
   margin-top: 16px;
   font-weight: 800;
 }
+/* ========================= */
+/* 📱 MOBILE CART FIX */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .cart-page {
+    padding: 40px 16px;
+  }
+
+  .cart-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  /* 1️⃣ One column layout */
+  .cart-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* 2️⃣ Cart list padding */
+  .cart-list {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  /* 3️⃣ Cart row layout (stack better) */
+  .cart-row {
+    grid-template-columns: 1fr auto;
+    row-gap: 12px;
+  }
+
+  .cart-price {
+    grid-column: 2;
+  }
+
+  .cart-remove {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  /* 4️⃣ Summary full width */
+  .cart-summary {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .checkout-btn {
+    font-size: 16px;
+    padding: 18px;
+  }
+}
