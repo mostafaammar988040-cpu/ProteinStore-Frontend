@@ -185,9 +185,37 @@ useEffect(() => {
       <style>{`
 .hero {
   background: radial-gradient(circle at top, #0f172a, #020617);
-  padding: 110px 60px;
+  min-height: 100vh;
+  padding: 120px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   color: white;
+}
+  @media (max-width: 700px) {
+  .hero {
+    padding: 80px 20px;
+    min-height: 100svh; /* better than vh on mobile */
+  }
+
+  .hero h1 {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 16px;
+    margin-top: 12px;
+  }
+}
+  @media (max-width: 700px) {
+  .hero button,
+  .hero .btn {
+    margin-top: 24px;
+    padding: 14px 26px;
+    font-size: 16px;
+  }
 }
 
 .toolbar {
