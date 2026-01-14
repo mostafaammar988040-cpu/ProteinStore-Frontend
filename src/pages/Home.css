@@ -74,3 +74,51 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-18px); }
 }
+/* ============================= */
+/* 📱 MOBILE HOME HERO FIX */
+/* ============================= */
+@media (max-width: 768px) {
+
+  .home-hero {
+    grid-template-columns: 1fr;   /* 1 column */
+    min-height: 100svh;           /* mobile-safe viewport */
+    padding-top: 20px;
+  }
+
+  .home-left {
+    padding: 40px 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-left h1 {
+    font-size: 42px;
+    line-height: 1.15;
+  }
+
+  .home-subtitle {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .home-button {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  .home-right {
+    padding-bottom: 40px;
+  }
+
+  .home-logo {
+    width: 200px;
+    height: 200px;
+    padding: 16px;
+  }
+
+  .home-right::before {
+    width: 260px;
+    height: 260px;
+    filter: blur(60px);
+  }
+}
