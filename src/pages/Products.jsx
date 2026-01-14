@@ -157,11 +157,19 @@ export default function Products() {
       )}
 
       {/* CSS */}
-      <style>{`
+    <style>{`
+/* GLOBAL SAFETY */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* HERO */
 .hero {
   background: radial-gradient(circle at top, #0f172a, #020617);
   min-height: 100vh;
-  padding: 120px 60px;
+  margin-top: -80px;
+  padding: 200px 60px 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,35 +179,70 @@ export default function Products() {
 
 @media (max-width: 700px) {
   .hero {
-    padding: 80px 20px;
+    margin-top: -70px;
+    padding: 160px 20px 80px;
     min-height: 100svh;
   }
 }
 
+/* TOOLBAR */
 .toolbar {
   display: flex;
   justify-content: center;
   gap: 16px;
-  margin: 60px 0;
+  margin: 60px auto;
 }
 
+.search,
+.sort {
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+}
+
+/* MOBILE TOOLBAR FIX */
+@media (max-width: 700px) {
+  .toolbar {
+    flex-direction: column;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .search,
+  .sort {
+    width: 100%;
+  }
+}
+
+/* PRODUCTS SECTION */
 .products {
   background: #f8fafc;
   padding: 60px 80px;
 }
 
+/* MOBILE PADDING FIX */
+@media (max-width: 700px) {
+  .products {
+    padding: 30px 16px;
+  }
+}
+
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 36px;
 }
 
+/* TABLET */
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* MOBILE */
 @media (max-width: 700px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -207,6 +250,7 @@ export default function Products() {
   }
 }
 
+/* CARD */
 .card {
   background: white;
   border-radius: 26px;
@@ -217,6 +261,14 @@ export default function Products() {
   flex-direction: column;
 }
 
+@media (max-width: 700px) {
+  .card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+}
+
+/* IMAGE */
 .image-box {
   position: relative;
   height: 160px;
@@ -226,6 +278,12 @@ export default function Products() {
   margin-bottom: 14px;
 }
 
+@media (max-width: 700px) {
+  .image-box {
+    height: 130px;
+  }
+}
+
 .image-box img {
   max-height: 100%;
   max-width: 100%;
@@ -233,12 +291,7 @@ export default function Products() {
   aspect-ratio: 1 / 1;
 }
 
-@media (max-width: 700px) {
-  .image-box {
-    height: 130px;
-  }
-}
-
+/* OVERLAY */
 .overlay {
   position: absolute;
   inset: 0;
@@ -256,12 +309,26 @@ export default function Products() {
   opacity: 1;
 }
 
+.overlay span {
+  color: white;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+/* PRICE */
 .price {
   font-size: 24px;
   font-weight: 900;
   color: #2563eb;
 }
 
+@media (max-width: 700px) {
+  .price {
+    font-size: 20px;
+  }
+}
+
+/* ACTIONS */
 .actions {
   display: flex;
   gap: 12px;
@@ -275,6 +342,7 @@ export default function Products() {
   }
 }
 
+/* QTY */
 .qty {
   background: #020617;
   color: white;
@@ -285,6 +353,7 @@ export default function Products() {
   justify-content: center;
 }
 
+/* ADD BUTTON */
 .add {
   flex: 1;
   border-radius: 999px;
@@ -293,8 +362,10 @@ export default function Products() {
   border: none;
   font-weight: 800;
   padding: 12px;
+  cursor: pointer;
 }
 
+/* MODAL */
 .modal-bg {
   position: fixed;
   inset: 0;
@@ -310,7 +381,14 @@ export default function Products() {
   width: 420px;
   padding: 30px;
   border-radius: 30px;
+  position: relative;
   text-align: center;
+}
+
+@media (max-width: 700px) {
+  .modal {
+    width: calc(100% - 32px);
+  }
 }
 
 .close {
@@ -320,8 +398,9 @@ export default function Products() {
   border: none;
   background: none;
   font-size: 22px;
+  cursor: pointer;
 }
-      `}</style>
+`}</style>
     </>
   );
 }
